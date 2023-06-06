@@ -1,9 +1,64 @@
-<h1>Eventos do Components</h1>
+<h2>Eventos</h2>
 
+<hr>
 
+<div class="">
+  <div class="form-group mb-2">
+    <label class="me-2">Filtro: </label>
+    <input
+    thype="text"
+    class="form-control me-2"
+    placeholder="buscar"
+    [(ngModel)]="filtroLista"
+    >
+  </div>
 
-<div *ngFor="let evento of eventos">
-  <p><b>Tema:</b> {{evento.tema}}</p>
-  <p><b>Local:</b> {{evento.local}}</p>
-  <hr>
 </div>
+<!-- <h3>Filtro: {{filtroLista}}</h3> -->
+<table class="table">
+  <thead class="table-dark">
+    <tr>
+      <th class="text-center" scope="col"><button type="button" class="btn btn-light btn-sm"
+        (click)="alterarImagem()">
+        {{!exibirImagem ? 'Mostrar' : 'Ocultar'}}</button></th>
+      <th class="text-center" scope="col">#</th>
+      <th class="text-center" scope="col">Tema</th>
+      <th class="text-center" scope="col">Local</th>
+      <th class="text-center" scope="col">Data</th>
+      <th class="text-center" scope="col">Qtd Pessoas</th>
+      <th class="text-center" scope="col">Lote</th>
+      <th class="text-center" scope="col">Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor="let evento of eventosFiltrados">
+      <td>
+        <img [collapse]="!exibirImagem"
+             [isAnimated]="true"
+          src="assets/{{evento.imagemURL}}"
+          [style.width.px]="larguraImagem"
+          [style.margin.px]="margemImagem"
+        >
+      </td>
+      <td class="text-center">{{evento.eventoId}}</td>
+      <td>{{evento.tema}}</td>
+      <td>{{evento.local}}</td>
+      <td class="text-center">{{evento.dataEvento}}</td>
+      <td class="text-center">{{evento.qtdPessoas}}</td>
+      <td class="text-center">{{evento.lote}}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm me-2">Editar</button>
+        <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!eventos.length">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum evento encontrado!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+
