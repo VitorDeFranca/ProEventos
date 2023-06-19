@@ -1,7 +1,4 @@
-<h2>Eventos</h2>
-
-<hr>
-
+<app-titulo [titulo]="'Eventos'"></app-titulo>
 <div class="">
   <div class="form-group mb-2">
     <label class="me-2">Filtro: </label>
@@ -18,8 +15,9 @@
 <table class="table">
   <thead class="table-dark">
     <tr>
-      <th class="text-center" scope="col"><button type="button" class="btn btn-light btn-sm"
+      <th class="text-center" scope="col"><button type="button" class="btn btn-secondary btn-sm"
         (click)="alterarImagem()">
+        <i class="{{exibirImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
         {{!exibirImagem ? 'Mostrar' : 'Ocultar'}}</button></th>
       <th class="text-center" scope="col">#</th>
       <th class="text-center" scope="col">Tema</th>
@@ -40,15 +38,20 @@
           [style.margin.px]="margemImagem"
         >
       </td>
-      <td class="text-center">{{evento.eventoId}}</td>
+      <td class="text-center">{{evento.id}}</td>
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
-      <td class="text-center">{{evento.dataEvento}}</td>
+      <td class="text-center">{{evento.dataEvento | DateFormatPipe}}</td>
       <td class="text-center">{{evento.qtdPessoas}}</td>
-      <td class="text-center">{{evento.lote}}</td>
+      <td class="text-center">{{evento.lotes[0].nome}}</td>
       <td>
-        <button type="button" class="btn btn-primary btn-sm me-2">Editar</button>
-        <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+        <button type="button" class="btn btn-primary btn-sm me-2" data-toggle="tooltip" data-placement = "top" title="Editar">
+        <i class="fa-solid fa-pen"></i>
+        </button>
+
+        <button type="button" class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement = "bottom" title="Excluir" (click)="openModal(template)">
+        <i class="fa-solid fa-xmark"></i>
+        </button>
       </td>
     </tr>
   </tbody>
@@ -61,4 +64,11 @@
   </tfoot>
 </table>
 
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que você quer deletar esse evento?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
 
