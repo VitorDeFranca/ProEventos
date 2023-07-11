@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application.Dtos;
 using ProEventos.Application.Contratos;
 using ProEventos.Domain;
+using System.Net.Http;
 
 namespace ProEventos.API.Controllers
 {
@@ -115,9 +116,9 @@ namespace ProEventos.API.Controllers
                 var eventos = await _eventoService.GetEventoByIdAsync(id, true);
                 if (eventos == null) return NoContent();
 
-                return await _eventoService.DeleteEvento(id) ? 
-                    Ok("Deletado") : 
-                    throw new Exception("Ocorreu um erro não específico aotentar deletar Evento.");
+                return await _eventoService.DeleteEvento(id) 
+                    ? Ok(new { message = "Deletado" })
+                    : throw new Exception("Ocorreu um erro não específico aotentar deletar Evento.");
             }
             catch (Exception ex)
             {               
