@@ -35,7 +35,7 @@ export class EventoService {
 
   public put(evento: Evento):  Observable<Evento> {
     return this.http
-      .put<Evento>(`${this.baseURL}/${evento.id}}`, evento)
+      .put<Evento>(`${this.baseURL}/${evento.id}`, evento)
       .pipe(take(1));
   }
 
