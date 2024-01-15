@@ -18,6 +18,10 @@ using ProEventos.Persistence;
 using ProEventos.Persistence.Contextos;
 using ProEventos.Persistence.Contratos;
 using AutoMapper;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Humanizer.Localisation;
+using Microsoft.AspNetCore.Http;
 
 namespace ProEventos.API
 {
@@ -50,6 +54,7 @@ namespace ProEventos.API
             services.AddScoped<ILotePersist, LotePersist>();
             
             services.AddCors();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.API", Version = "v1" });
@@ -75,6 +80,11 @@ namespace ProEventos.API
             app.UseCors(x => x.AllowAnyHeader()
                               .AllowAnyMethod()
                               .AllowAnyOrigin());
+
+            app.UseStaticFiles(new StaticFileOptions() {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
+                RequestPath = new PathString("/Resources")
+            });
 
             app.UseEndpoints(endpoints =>
             {
